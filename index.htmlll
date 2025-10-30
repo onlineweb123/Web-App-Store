@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Play Store - Web Creative Lab</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --accent: #00b894;
+      --dark: #1a237e;
+      --bg: #f3f5fb;
+      --text: #222;
+      --shadow: rgba(0, 0, 0, 0.15);
+    }
+    ::-webkit-scrollbar { width: 0; height: 0; }
+    html, body { scrollbar-width: none; -ms-overflow-style: none; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI','Noto Sans Tamil',sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: linear-gradient(90deg,#1a73e8,#00b894);
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 3px 15px var(--shadow);
+    }
+    header h1 { margin: 0; font-size: 2em; font-weight: 700; }
+    header p { margin: 6px 0 15px; color: rgba(255,255,255,0.9); }
+
+    .search-box {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .search-box input {
+      padding: 12px 15px; width: 70%; max-width: 380px;
+      border: none; border-radius: 25px 0 0 25px;
+      background: white; font-size: 1em;
+    }
+    .search-box button {
+      padding: 12px 18px;
+      background: rgba(0,0,0,0.15);
+      border: none; border-radius: 0 25px 25px 0;
+      color: white; cursor: pointer; transition: .3s;
+    }
+    .search-box button:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+
+    .scroll-section {
+      padding: 18px 10px; overflow-x: auto; white-space: nowrap;
+    }
+    .app-icon {
+      display: inline-block;
+      background: white; border-radius: 18px;
+      box-shadow: 0 4px 14px var(--shadow);
+      width: 140px; margin-right: 14px;
+      text-align: center; padding: 15px;
+      transition: all .3s ease; cursor: pointer;
+    }
+    .app-icon:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 8px 22px rgba(0,0,0,0.25); }
+    .app-icon div {
+      width: 65px; height: 65px; margin: auto; border-radius: 16px;
+      background: var(--primary); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6em; box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .app-icon p { margin: 10px 0 6px; font-weight: 600; color: #1a237e; }
+    .app-icon button {
+      background: var(--accent); color: white; border: none;
+      border-radius: 20px; padding: 6px 12px;
+      cursor: pointer; font-size: 0.9em; transition: 0.3s;
+    }
+    .app-icon button:hover { background: #019870; }
+
+    .app-list {
+      padding: 20px 15px 80px;
+      display: flex; flex-direction: column; align-items: center; gap: 25px;
+    }
+    .app-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      box-shadow: 0 4px 16px var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      max-width: 600px; width: 100%;
+      transition: all .3s ease;
+    }
+    .app-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+
+    .app-card-top {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .app-logo {
+      width: 60px; height: 60px; border-radius: 15px;
+      background: var(--primary); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 1.4em;
+    }
+    .app-name {
+      flex-grow: 1; text-align: center; font-weight: 600;
+      font-size: 1.1em; color: var(--dark);
+    }
+    .view-btn {
+      background: var(--accent); color: white;
+      padding: 8px 18px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; transition: all .3s;
+    }
+    .view-btn:hover { background: #019870; transform: scale(1.05); }
+
+    .app-date {
+      margin-top: 10px; font-size: 0.95em;
+      color: #333; background: #f1f3f4;
+      padding: 8px 10px; border-radius: 8px; display: inline-block;
+    }
+
+    footer {
+      background: linear-gradient(90deg,#1a237e,#0d47a1);
+      color: white; text-align: center;
+      padding: 22px 10px; font-size: 0.9em;
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 -2px 10px var(--shadow);
+    }
+    footer span { color: var(--accent); font-weight: 600; }
+    
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Web Creative Lab</h1>
+    <p>PWA Web App </p>
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="App / Website Name Search...">
+      <button onclick="filterApps()">🔍</button>
+    </div>
+  </header>
+
+  <!-- 🔹 Horizontal Scroll Section -->
+  <div class="scroll-section">
+    <div class="app-icon" onclick="openSite('https://onlineweb123.github.io/Meadi-Aqua-Tech-Website-/')">
+      <div>🌊</div>
+      <p>Meadi Aqua</p>
+      <button>Install</button>
+    </div>
+
+    <div class="app-icon" onclick="openSite('https://brainboost.example.com')">
+      <div style="background:#6a11cb;">🧠</div>
+      <p>Brain Boost</p>
+      <button>Install</button>
+    </div>
+
+    <div class="app-icon" onclick="openSite('https://fitpower.example.com')">
+      <div style="background:#00b894;">💪</div>
+      <p>Fit Power</p>
+      <button>Install</button>
+    </div>
+  </div>
+
+  <!-- 🔻 Vertical App List -->
+  <div id="appList" class="app-list">
+    <div class="app-card" onclick="openSite('https://onlineweb123.github.io/Meadi-Aqua-Tech-Website-/')">
+      <div class="app-card-top">
+        <div class="app-logo">M</div>
+        <div class="app-name">Meadi Aqua Tech</div>
+        <a href="https://onlineweb123.github.io/Meadi-Aqua-Tech-Website-/" target="_blank" class="view-btn">View</a>
+      </div>
+      <div class="app-date">📅 Creat Date : 16 - 06 - 2025</div>
+    </div>
+
+    <!-- 🌐 Second Website -->
+    <div class="app-card" onclick="openSite('https://onlineweb123.github.io/Fit-Life-Tracker/')">
+      <div class="app-card-top">
+        <div class="app-logo" style="background:#00b894;">F</div>
+        <div class="app-name">Fit Life Tracker</div>
+        <a href="https://onlineweb123.github.io/Fit-Life-Tracker/" target="_blank" class="view-btn">View</a>
+      </div>
+      <div class="app-date">📅 Creat Date : 16 - 06 - 2025</div>
+    </div>
+
+    <!-- 🌐 Third Website -->
+    <div class="app-card" onclick="openSite('https://onlineweb123.github.io/Brain-Boost-Lab/')">
+      <div class="app-card-top">
+        <div class="app-logo" style="background:#6a11cb;">B</div>
+        <div class="app-name">Brain Boost Lab</div>
+        <a href="https://onlineweb123.github.io/Brain-Boost-Lab/" target="_blank" class="view-btn">View</a>
+      </div>
+      <div class="app-date">📅 Creat Date : 16 - 06 - 2025</div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 created by Mathavan
+  </footer>
+
+  <script>
+    function filterApps() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll(".app-card");
+      cards.forEach(card => {
+        const name = card.querySelector(".app-name").innerText.toLowerCase();
+        card.style.display = name.includes(input) ? "block" : "none";
+      });
+    }
+    function openSite(url) {
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
